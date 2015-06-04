@@ -6,16 +6,20 @@ The confusion
 table is a table in which the rows are the observed categories of the dependent and
 the columns are the predicted categories. When prediction is perfect all cases will lie on the
 diagonal. The percentage of cases on the diagonal is the percentage of correct classifications. 
-
-%-------------------------------------------------------------------------------------%
-
-
+\end{frame}
+%-----------------------------------------------------------------------------------%
+\begin{frame}
+\frametitle{Cross Validation}
+\Large
 The cross validated set of data is a more honest presentation of the power of the
 discriminant function than that provided by the original classifications and often produces
 a poorer outcome. The cross validation is often termed a jack-knife classification, in that
 it successively classifies \textbf{all cases but one} to develop a discriminant function and then
 categorizes the case that was left out. This process is repeated with each case left out in
 turn.This is known as leave-1-out cross validation. 
+\end{frame}
+%-----------------------------------------------------------------------------------%
+\begin{frame}
 
 This cross validation produces a more reliable function. The argument behind it is that
 one should not use the case you are trying to predict as part of the categorization process.
@@ -33,7 +37,9 @@ An optimistic error rate is obtained by reclassifying the training data. (In the
 
 The apparent error rate is obtained by using in the training set to estimate
 the error rates. It can be severely optimistically biased, particularly for complex classifiers, and in the presence of over-fitted models.
-
+\end{frame}
+%-----------------------------------------------------------------------------------%
+\begin{frame}
 
 If an independent test sample is used for classifying, we arrive at the  \textbf{true error rate}.The true error rate (or conditional error rate) of a classifier is the expected
 probability of misclassifying a randomly selected pattern.
@@ -117,4 +123,4 @@ fact from class 1 is denoted $p(2|1)$.
 A reasonable classification rule should have ECM as small as possible.
 \end{frame}
 %-----------------------------------------------------------------------------------%
-\begin{frame}
+\end{document}
