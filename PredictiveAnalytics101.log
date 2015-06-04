@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9) (preloaded format=pdflatex 2014.10.12)  4 JUN 2015 22:41
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9) (preloaded format=pdflatex 2014.10.12)  4 JUN 2015 23:02
 entering extended mode
 **PredictiveAnalytics101.tex
 
@@ -940,8 +940,121 @@ Dictionary: translator-theorem-dictionary, Language: English
 LaTeX Info: Redefining \includegraphics on input line 9.
 
 No file PredictiveAnalytics101.nav.
+(C:\Users\Kevin\Documents\GitHub\PredictiveAnalytics101\00-leadoutslides.tex
+LaTeX Font Info:    Try loading font information for U+msa on input line 14.
 
-! LaTeX Error: File `00-leadoutslides.tex' not found.
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\amsfonts\umsa.fd"
+File: umsa.fd 2013/01/14 v3.01 AMS symbols A
+)
+LaTeX Font Info:    Try loading font information for U+msb on input line 14.
+
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\amsfonts\umsb.fd"
+File: umsb.fd 2013/01/14 v3.01 AMS symbols B
+)
+LaTeX Font Info:    Try loading font information for OT1+mathkerncmss on input 
+line 14.
+
+(C:\Users\Kevin\AppData\Roaming\MiKTeX\2.9\tex\latex\sansmathaccent\ot1mathkern
+cmss.fd
+File: ot1mathkerncmss.fd 2013/03/27 Fontinst v1.933 font definitions for OT1/ma
+thkerncmss.
+)
+
+LaTeX Font Warning: Font shape `OT1/cmss/m/n' in size <4> not available
+(Font)              size <5> substituted on input line 14.
+
+[1
+
+{C:/Users/Kevin/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}] [2
+
+])
+(C:\Users\Kevin\Documents\GitHub\PredictiveAnalytics101\01-Introduction.tex
+[3
+
+] [4
+
+])
+(C:\Users\Kevin\Documents\GitHub\PredictiveAnalytics101\01-ModelBuilding.tex
+[5
+
+]
+Missing character: There is no ‚ in font cmss10!
+Missing character: There is no Ä in font cmss10!
+Missing character: There is no ô in font cmss10!
+ [6
+
+]
+Missing character: There is no ‚ in font cmss10!
+Missing character: There is no Ä in font cmss10!
+Missing character: There is no ì in font cmss10!
+Missing character: There is no ‚ in font cmss10!
+Missing character: There is no Ä in font cmss10!
+Missing character: There is no ô in font cmss10!
+Missing character: There is no ‚ in font cmss10!
+Missing character: There is no Ä in font cmss10!
+Missing character: There is no ô in font cmss10!
+ [7
+
+] [8
+
+] [9
+
+] [10
+
+] [11
+
+]
+Missing character: There is no ‚ in font cmss10!
+Missing character: There is no Ä in font cmss10!
+Missing character: There is no ú in font cmss10!
+Missing character: There is no ‚ in font cmss10!
+Missing character: There is no Ä in font cmss10!
+Missing character: There is no ù in font cmss10!
+ [12
+
+]
+Missing character: There is no ‚ in font cmss10!
+Missing character: There is no Ä in font cmss10!
+Missing character: There is no ô in font cmss10!
+ [13
+
+] [14
+
+] [15
+
+] [16
+
+])
+(C:\Users\Kevin\Documents\GitHub\PredictiveAnalytics101\01-learningtypes.tex
+[17
+
+])
+(C:\Users\Kevin\Documents\GitHub\PredictiveAnalytics101\01-problemtypes.tex
+[18
+
+])
+(C:\Users\Kevin\Documents\GitHub\PredictiveAnalytics101\02-ModelAppraisal-part2
+.tex [19
+
+] <LROCPlot.png, id=494, 613.8132pt x 403.7484pt>
+File: LROCPlot.png Graphic file (type png)
+ <use LROCPlot.png>
+Package pdftex.def Info: LROCPlot.png used on input line 25.
+(pdftex.def)             Requested size: 215.10196pt x 141.48654pt.
+
+[20
+
+ <C:/Users/Kevin/Documents/GitHub/PredictiveAnalytics101/LROCPlot.png (PNG copy
+)>] <ROC1.png, id=520, 290.08376pt x 280.04625pt>
+File: ROC1.png Graphic file (type png)
+ <use ROC1.png>
+Package pdftex.def Info: ROC1.png used on input line 35.
+(pdftex.def)             Requested size: 215.10196pt x 207.65828pt.
+ [21
+
+ <C:/Users/Kevin/Documents/GitHub/PredictiveAnalytics101/ROC1.png>])
+
+! LaTeX Error: File `03-LawOfParsimony.tex' not found.
 
 Type X to quit or <RETURN> to proceed,
 or enter new name. (Default extension: tex)
@@ -950,17 +1063,17 @@ Enter file name:
 ! Emergency stop.
 <read *> 
          
-l.11 \subfile{00-leadoutslides.tex}
-                                   
+l.72 \subfile{03-LawOfParsimony.tex}
+                                    
 *** (cannot \read from terminal in nonstop modes)
 
  
 Here is how much of TeX's memory you used:
- 16124 strings out of 493921
- 310532 string characters out of 3144875
- 373674 words of memory out of 3000000
- 19063 multiletter control sequences out of 15000+200000
- 4545 words of font info for 17 fonts, out of 3000000 for 9000
+ 16412 strings out of 493921
+ 317543 string characters out of 3144875
+ 378674 words of memory out of 3000000
+ 19263 multiletter control sequences out of 15000+200000
+ 9782 words of font info for 36 fonts, out of 3000000 for 9000
  841 hyphenation exceptions out of 8191
- 56i,4n,55p,403b,282s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 56i,14n,55p,403b,724s stack positions out of 5000i,500n,10000p,200000b,50000s
 !  ==> Fatal error occurred, no output PDF file produced!
