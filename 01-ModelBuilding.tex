@@ -1,8 +1,18 @@
+\documentclass[PredictiveAnalytics101.tex]{subfiles} 
+\begin{document}
+\begin{frame}
 Step 1 is defining the problem. Put simply, what question(s) are you trying to answer? Once you
 understand that you need to then think about what data is available to you to answer the question:
-- Is the data directly related to the question?
-- If it is not, can you create a proxy relationship to be able to link it?
-- Is the data you need even available within the enterprise or elsewhere?
+
+\begin{itemize}
+\item Is the data directly related to the question?
+\item If it is not, can you create a proxy relationship to be able to link it?
+\item Is the data you need even available within the enterprise or elsewhere?
+\end{itemize}
+
+\end{frame}
+%============================================================%
+\begin{frame}
 As part of step 1, you also need to specify the inputs and outputs of the model you are going to build as
 these may change as you change and tweak the model. Finally, don’t forget the most commonly
 forgotten piece of any new initiative. Determine, up front, how you are going to measure the results.
@@ -13,10 +23,16 @@ the business?
 \end{frame}
 %============================================================%
 \begin{frame}
+	\frametitle{Step 2}
 Step 2 is more rote and technical – process the data. Collect the data (more is always better in this
 analyst’s mind but more does not always mean easier or better results). In general, more recent data is
 better and the data need to be consistent. Don’t skimp on cleaning the data. While this may end up
-taking the most time, it is critical and erroneous data will create erroneous results. Transforming the
+taking the most time, it is critical and erroneous data will create erroneous results.
+\end{frame}
+%============================================================%
+\begin{frame}
+	\frametitle{Step 2}
+Transforming the
 data is also worth the time and effort to improve the modeling process including such things as:
 - Converting non-numerical data to numeric (or vice versa)
 - Standardizing thing such as coding, definitions, costs, combining variables, etc.
@@ -25,12 +41,18 @@ the front end.
 \end{frame}
 %============================================================%
 \begin{frame}
+	\frametitle{Step 3}
 Step 3 is running the initial model. Part of step 3 is to split the dataset into a test dataset and a
 validation dataset. If you really want to be able to test the accuracy of the model once it has been built,
 you need to do this. The software will walk you through this and will do this for you by default, holding
 back 30% of the total data for validation testing, although it does allow you to override the default
 values. This is also the step whereby you will choose the method or methods by which you want to
-build the model and process the data. As you become more familiar with predictive modeling and with
+build the model and process the data. 
+\end{frame}
+%============================================================%
+\begin{frame}
+	\frametitle{Step 3}
+As you become more familiar with predictive modeling and with
 your own data you will find that certain types of data and certain types of analyses or problems do lend
 themselves more or less to certain types of modeling. But if you are just starting out, you can use the
 software to guide you in the choice of a model or simply choose to run all the models against your data.
@@ -46,22 +68,41 @@ answer is yes, then move on to the next step. If the answer is no, then consider
 - Consider collecting more or different data
 - Consider redefining the problem, changing the question and the means to an answer as you
 better understand your data and your environment
-Part of the learning process may be to try and not “boil the ocean” with your models. Think about
-setting up the model to run on a number of scenarios starting from the simple and most straightforward
-and then progressing to more and more complex.
-\end{frame}
-%============================================================%
-\begin{frame}Step 5 is to select the final model. Don’t be afraid to try a number of different models and then when
-you are satisfied with the results, choose the best one. We will talk about means of assessing the
-accuracy of your model in a bit. For now, choose the final model and consider whether you want to rerun
-the entire dataset against the selected model and re-examine the results
 \end{frame}
 %============================================================%
 \begin{frame}
+\begin{itemize}
+\item Part of the learning process may be to try and not “boil the ocean” with your models.
+\item Think about
+setting up the model to run on a number of scenarios starting from the simple and most straightforward
+and then progressing to more and more complex.
+\end{itemize}
+
+\end{frame}
+%============================================================%
+\begin{frame}
+\frametitle{Step 5} 
+Step 5 is to select the final model.
+\begin{itemize}
+\item Don’t be afraid to try a number of different models and then when
+you are satisfied with the results, choose the best one.
+\item  We will talk about means of assessing the
+accuracy of your model in a bit.
+\item For now, choose the final model and consider whether you want to rerun
+the entire dataset against the selected model and re-examine the results
+\end{itemize} 
+\end{frame}
+%============================================================%
+\begin{frame}
+\frametitle{Step 6}
 Step 6 is to test the final model. This is another one of those things that often seems not to get done.
 It is important to test the final model and the only way to do so is to take the selected model and run it
 against a second, unrelated dataset (e.g. - the validation dataset or the portion of the dataset that was
-held back for this purpose) and assess the results. Do not tweak or change the model in any way at this
+held back for this purpose) and assess the results.
+\end{frame}
+%============================================================%
+\begin{frame}
+Do not tweak or change the model in any way at this
 point as it will invalidate any comparison to the initial results. If the results are similar and you are
 satisfied with them you can move on to the final step. If you are not, then go back (to step 3) to
 reassessing the model and the data, make any necessary or desired changes and try re-running the
@@ -77,3 +118,6 @@ you are satisfied, please do two things:
 points)
 2) Take the output from the model and turn it back into language and output for the business
 that answers the initial question you set out to answer and makes it useful/usable for them 
+\end{frame}
+%============================================================%
+\end{document}

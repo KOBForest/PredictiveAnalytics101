@@ -1,3 +1,9 @@
+\documentclass{beamer}
+
+\usepackage{subfiles}
+\usepackage{framed}
+\usepackage{graphicx}
+\usepackage{amsmath}
 
 
 \begin{document}
@@ -8,11 +14,17 @@
 %  - EARL
 %  - PyCon Ireland
 %==============================================%
-\subfile{01-introduction.tex}
+\subfile{01-Introduction.tex}
 %  Discussion of Predictive Analytics
 %  Machine Learning
-%==============================================%
+
+
+%=================================================================================%
+
 \subfile{01-ModelBuilding.tex}
+
+
+
 
 %==============================================%
 \subfile{01-learningtypes.tex}
@@ -65,37 +77,19 @@
 % Testing and Training
 % k-folds Cross Validation
 
-\end{document}
 %===============================================================================%
+
+
+% - Dimensionality Reduction
+
+% - Feature Selection / Variable Selection
+
+
+%==============================================%
+\end{document}
 %- http://www.avanade.com/~/media/documents/bi-white-paper-healthcare-analytics-practical-predictive-analytics-101-may-2013.pdf
 
-A predictive model is not magic and it is not rocket science. It is actually a mathematical representation
-of reality that offers a view based on science and statistics that uses data that is currently available to
-predict the risk of an adverse event (or a preferred event) at some point in the future. The models, and
-there are many, look for patterns in the data that may not always be evident and which seem linked to
-an outcome of some sort. Depending on the data and the model it can do so in either a supervised
-learning fashion, where the model describes a relationship between a set of independent attributes and
-a dependent attribute or in an unsupervised learning fashion where the model, itself, will find
-relationships in the data without reference to independent or dependent variables.
-
-
-%=================================================================================%
-
-Dimensionality Reduction
-
-Feature Selection / Variable Selection
 
 
 
 
-The technical term for that type of analysis is multivariate analysis. Though certainly not a
-totally inclusive listing, some knowledge of the following terms will help you understand the area of
-predictive modeling better and make it easier for you to judge the value and the accuracy of models that
-you create. Those terms are:
-- Sensitivity and Specificity
-- True and False Positives and Negatives
-- Predictive Value and Positive Predictive Value
-- Parametric vs. Non-Parametric
-- Correlation Coefficient (R) and R-Squared
-- Regression
-- ROC curve (aka area under the curve)
