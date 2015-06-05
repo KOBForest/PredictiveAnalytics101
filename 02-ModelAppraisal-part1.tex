@@ -17,6 +17,16 @@
 \end{frame}
 %================================
 
+
+\begin{frame}
+	\begin{figure}
+\centering
+\includegraphics[width=0.7\linewidth]{confusionmatrix2}
+\caption{}
+\label{fig:confusionmatrix2}
+\end{figure}
+
+\end{frame}
 %==================================%
 \begin{frame}
 \frametitle{The Confusion Matrix}
@@ -33,29 +43,45 @@ Accuracy measures a fraction of the classifier's predictions that are correct.
 %==================================%
 \begin{frame}
 	\textbf{Accuracy}\\
-However, accuracy is not an informative metric if the proportions of
-the classes are skewed in the population. For example, a classifier that predicts
+\begin{itemize}
+\item However, accuracy is not an informative metric if the proportions of
+the classes are skewed in the population. 
+\item For example, a classifier that predicts
 whether or not credit card transactions are fraudulent may be more sensitive to
-false negatives than to false positives. To promote customer satisfaction, the credit
+false negatives than to false positives. 
+\item To promote customer satisfaction, the credit
 card company may prefer to risk verifying legitimate transactions than risk ignoring
 a fraudulent transaction. 
+\end{itemize}
+
 \end{frame}
 %==================================%
 \begin{frame}
 \textbf{Accuracy}\\
-Because most transactions are legitimate, accuracy is
-not an appropriate metric for this problem. A classifier that always predicts that
+\begin{itemize}
+\item Because most transactions are legitimate, accuracy is
+not an appropriate metric for this problem.
+\item  A classifier that always predicts that
 transactions are legitimate could have a high accuracy score, but would not be
-useful. For these reasons, classifiers are often evaluated using two additional
+useful. 
+\item For these reasons, classifiers are often evaluated using two additional
 measures called precision and recall.
+\end{itemize}
+
 \end{frame}
 %=================================%
 \begin{frame}
-\textbf{Precision and Recall}\\
-Recall from Chapter 1, The Fundamentals of Machine Learning, that precision is the
-fraction of positive predictions that are correct. For instance, in our SMS spam
+\textbf{Precision and Recall}
+
+\begin{itemize}
+\item Recall from Chapter 1, The Fundamentals of Machine Learning, that precision is the
+fraction of positive predictions that are correct. 
+\item For instance, in our SMS spam
 classifier, precision is the fraction of messages classified as spam that are actually
-spam. Precision is given by the following ratio:
+spam. 
+\item Precision is given by the following ratio:
+\end{itemize}
+
 \[ P = \frac{TP}{TP + FP} \]
 \end{frame}
 %=================================%
