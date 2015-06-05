@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9) (preloaded format=pdflatex 2014.10.12)  5 JUN 2015 00:49
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9) (preloaded format=pdflatex 2014.10.12)  5 JUN 2015 14:44
 entering extended mode
 **PredictiveAnalytics101.tex
 
@@ -979,21 +979,21 @@ LaTeX Font Warning: Font shape `OT1/cmss/m/n' in size <4> not available
 [5
 
 ]
-Missing character: There is no â in font cmss10!
-Missing character: There is no € in font cmss10!
-Missing character: There is no ™ in font cmss10!
+Missing character: There is no â in font cmss12!
+Missing character: There is no € in font cmss12!
+Missing character: There is no ™ in font cmss12!
  [6
 
 ]
-Missing character: There is no â in font cmss10!
-Missing character: There is no € in font cmss10!
-Missing character: There is no “ in font cmss10!
-Missing character: There is no â in font cmss10!
-Missing character: There is no € in font cmss10!
-Missing character: There is no ™ in font cmss10!
-Missing character: There is no â in font cmss10!
-Missing character: There is no € in font cmss10!
-Missing character: There is no ™ in font cmss10!
+Missing character: There is no â in font cmss12!
+Missing character: There is no € in font cmss12!
+Missing character: There is no “ in font cmss12!
+Missing character: There is no â in font cmss12!
+Missing character: There is no € in font cmss12!
+Missing character: There is no ™ in font cmss12!
+Missing character: There is no â in font cmss12!
+Missing character: There is no € in font cmss12!
+Missing character: There is no ™ in font cmss12!
  [7
 
 ] [8
@@ -1004,6 +1004,8 @@ Missing character: There is no ™ in font cmss10!
 
 ] [11
 
+] [12
+
 ]
 Missing character: There is no â in font cmss10!
 Missing character: There is no € in font cmss10!
@@ -1011,60 +1013,35 @@ Missing character: There is no œ in font cmss10!
 Missing character: There is no â in font cmss10!
 Missing character: There is no € in font cmss10!
 Missing character: There is no  in font cmss10!
- [12
+ [13
 
 ]
 Missing character: There is no â in font cmss10!
 Missing character: There is no € in font cmss10!
 Missing character: There is no ™ in font cmss10!
- [13
-
-] [14
+ [14
 
 ] [15
 
 ] [16
 
+] [17
+
 ])
 (C:\Users\Kevin\Documents\GitHub\PredictiveAnalytics101\01-learningtypes.tex
-[17
+[18
+
+] [19
 
 ])
 (C:\Users\Kevin\Documents\GitHub\PredictiveAnalytics101\01-problemtypes.tex
-[18
+[20
 
 ])
-(C:\Users\Kevin\Documents\GitHub\PredictiveAnalytics101\02-ModelAppraisal-part3
-.tex
-! Extra }, or forgotten \endgroup.
-\endframe ->\egroup 
-                    \begingroup \def \@currenvir {frame}
-l.9 \end{frame}
-               
-I've deleted a group-closing symbol because it seems to be
-spurious, as in `$x}$'. But perhaps the } is legitimate and
-you forgot something else, as in `\hbox{$x}'. In such cases
-the way to recover is to insert both the forgotten and the
-deleted material, e.g., by typing `I$}'.
+(C:\Users\Kevin\Documents\GitHub\PredictiveAnalytics101\02-ModelAppraisal-part1
+.tex [21
 
-Missing character: There is no Â in font cmss12!
-Missing character: There is no ‘ in font cmss12!
-Missing character: There is no Â in font cmss12!
-Missing character: There is no ’ in font cmss12!
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [19
-
-]
-[20] [21
-
-]
-
-LaTeX Font Warning: Font shape `OT1/cmss/bx/it' undefined
-(Font)              using `OT1/cmss/bx/n' instead on input line 40.
-
-[22
+] [22
 
 ] [23
 
@@ -1074,85 +1051,102 @@ LaTeX Font Warning: Font shape `OT1/cmss/bx/it' undefined
 
 ] [26
 
-] [27
+]
+<recall.png, id=675, 145.54375pt x 44.165pt>
+File: recall.png Graphic file (type png)
+ <use recall.png>
+Package pdftex.def Info: recall.png used on input line 80.
+(pdftex.def)             Requested size: 215.10196pt x 65.27756pt.
+ [27
 
-] [28
+ <C:/Users/Kevin/Documents/GitHub/PredictiveAnalytics101/recall.png>] [28
 
 ] [29
 
-
-! Undefined control sequence.
-<write> ...of misclassification \(ECM\)}{\Parent2 
-                                                  }% 1
-l.124 \end{frame}
-                 
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
+] [30
 
 ])
-! Extra \endgroup.
-\subfile ...p \skip@preamble \input {#1}\endgroup 
-                                                  
-l.66 \subfile{02-ModelAppraisal-part3.tex}
-                                          
-Things are pretty mixed up, but I think the worst is over.
+(C:\Users\Kevin\Documents\GitHub\PredictiveAnalytics101\02-ModelAppraisal-part3
+.tex [31
 
+]
+Missing character: There is no Â in font cmss12!
+Missing character: There is no ‘ in font cmss12!
+Missing character: There is no Â in font cmss12!
+Missing character: There is no ’ in font cmss12!
+ [32
 
+] [33
+
+]
+
+LaTeX Font Warning: Font shape `OT1/cmss/bx/it' undefined
+(Font)              using `OT1/cmss/bx/n' instead on input line 45.
+
+[34
+
+] [35
+
+] [36
+
+] [37
+
+] [38
+
+] [39
+
+] [40
+
+] [41
+
+])
 (C:\Users\Kevin\Documents\GitHub\PredictiveAnalytics101\02-ModelAppraisal-part2
-.tex [30
+.tex [42
 
-] <LROCPlot.png, id=775, 613.8132pt x 403.7484pt>
+] <LROCPlot.png, id=1082, 613.8132pt x 403.7484pt>
 File: LROCPlot.png Graphic file (type png)
  <use LROCPlot.png>
 Package pdftex.def Info: LROCPlot.png used on input line 25.
 (pdftex.def)             Requested size: 215.10196pt x 141.48654pt.
 
-[31
+[43
 
  <C:/Users/Kevin/Documents/GitHub/PredictiveAnalytics101/LROCPlot.png (PNG copy
-)>] <ROC1.png, id=802, 290.08376pt x 280.04625pt>
+)>] <ROC1.png, id=1109, 290.08376pt x 280.04625pt>
 File: ROC1.png Graphic file (type png)
  <use ROC1.png>
 Package pdftex.def Info: ROC1.png used on input line 35.
 (pdftex.def)             Requested size: 215.10196pt x 207.65828pt.
- [32
+ [44
 
  <C:/Users/Kevin/Documents/GitHub/PredictiveAnalytics101/ROC1.png>])
 (C:\Users\Kevin\Documents\GitHub\PredictiveAnalytics101\03-LawOfParsimony.tex
-<occamrazor.jpg, id=829, 328.22626pt x 154.5775pt>
+<occamrazor.jpg, id=1135, 328.22626pt x 154.5775pt>
 File: occamrazor.jpg Graphic file (type jpg)
  <use occamrazor.jpg>
 Package pdftex.def Info: occamrazor.jpg used on input line 11.
 (pdftex.def)             Requested size: 304.21866pt x 143.27203pt.
 
-[33
+[45
 
  <C:/Users/Kevin/Documents/GitHub/PredictiveAnalytics101/occamrazor.jpg>]
-[34
+[46
 
 ])
 \tf@nav=\write6
 \tf@toc=\write7
 \tf@snm=\write8
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 91.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 91.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 92.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 92.
 
 (C:\Users\Kevin\Documents\GitHub\PredictiveAnalytics101\PredictiveAnalytics101.
 aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 91.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 91.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 92.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 92.
+Package rerunfilecheck Info: File `PredictiveAnalytics101.out' has not changed.
 
+(rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
 
-Package rerunfilecheck Warning: File `PredictiveAnalytics101.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `PredictiveAnalytics101.out':
-(rerunfilecheck)             Before: D41D8CD98F00B204E9800998ECF8427E;0
-(rerunfilecheck)             After:  92D1A96227A6CA7E66A86B70B86665ED;83.
 
 LaTeX Font Warning: Size substitutions with differences
 (Font)              up to 1.0pt have occurred.
@@ -1160,26 +1154,28 @@ LaTeX Font Warning: Size substitutions with differences
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 91.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 92.
  ) 
 Here is how much of TeX's memory you used:
- 16535 strings out of 493921
- 319586 string characters out of 3144875
- 378672 words of memory out of 3000000
- 19344 multiletter control sequences out of 15000+200000
- 12018 words of font info for 44 fonts, out of 3000000 for 9000
+ 16661 strings out of 493921
+ 321631 string characters out of 3144875
+ 379674 words of memory out of 3000000
+ 19439 multiletter control sequences out of 15000+200000
+ 18384 words of font info for 67 fonts, out of 3000000 for 9000
  841 hyphenation exceptions out of 8191
- 56i,14n,55p,403b,724s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 56i,14n,55p,403b,732s stack positions out of 5000i,500n,10000p,200000b,50000s
 <C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmss10.pfb>
 <C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmss12.pfb><C
-:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmss8.pfb><C:/P
-rogram Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmssbx10.pfb><C:/P
-rogram Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmssi10.pfb><C:/Pr
-ogram Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Prog
-ram Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/symbols/msam10.pfb>
-Output written on PredictiveAnalytics101.pdf (34 pages, 349672 bytes).
+:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmss17.pfb><C:/
+Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmss8.pfb><C:/Pro
+gram Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmssbx10.pfb><C:/Pro
+gram Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmssi10.pfb><C:/Prog
+ram Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmssi17.pfb><C:/Progr
+am Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program
+ Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/symbols/msam10.pfb>
+Output written on PredictiveAnalytics101.pdf (46 pages, 437449 bytes).
 PDF statistics:
- 919 PDF objects out of 1000 (max. 8388607)
- 70 named destinations out of 1000 (max. 500000)
- 58 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 1237 PDF objects out of 1440 (max. 8388607)
+ 93 named destinations out of 1000 (max. 500000)
+ 63 words of extra memory for PDF output out of 10000 (max. 10000000)
 
