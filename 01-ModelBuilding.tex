@@ -1,15 +1,29 @@
 \documentclass[PredictiveAnalytics101.tex]{subfiles} 
 \begin{document}
 \begin{frame}
+\Large
+\begin{enumerate}
+\item Defining the Problem
+\item Processing The Data
+\item Run an initial model
+\item Evaluate the initial model
+\item Select a final model
+\item Testing the Model
+\item Use the Model
+\end{enumerate}
+\end{frame}
+%============================================================	
+\begin{frame}
 \frametitle{Step 1 : Defining the Problem}
 \Large
-Step 1 is defining the problem. Put simply, what question(s) are you trying to answer? Once you
+% Step 1 is defining the problem. \\ 
+What question(s) are you trying to answer? Once you
 understand that you need to then think about what data is available to you to answer the question:
 
 \begin{itemize}
 \item Is the data directly related to the question?
 \item If it is not, can you create a proxy relationship to be able to link it?
-\item Is the data you need even available within the enterprise or elsewhere?
+% \item Is the data you need even available within the enterprise or elsewhere?
 \end{itemize}
 
 \end{frame}
@@ -20,8 +34,14 @@ understand that you need to then think about what data is available to you to an
 As part of step 1, you also need to specify the inputs and outputs of the model you are going to build as
 these may change as you change and tweak the model. Finally, don’t forget the most commonly
 forgotten piece of any new initiative. Determine, up front, how you are going to measure the results.
+\end{frame}
+%============================================================%
+\begin{frame}
+	\frametitle{Step 1 : Defining the Problem}
+	\Large
 \begin{itemize}
-\item What measure of accuracy are you going to use? Is that level of accuracy good enough for
+\item What measure of accuracy are you going to use? 
+\item Is that level of accuracy good enough for
 the business?
 \item How will you benchmark the results?
 \item  What criteria are you going to use to determine success or failure?
@@ -32,7 +52,8 @@ the business?
 	\frametitle{Step 2 : Processing the Data}
 	\Large
 	\begin{itemize}
-\item Step 2 is more rote and technical – process the data. Collect the data (more is always better in this
+\item Step 2 is more rote and technical – process the data.
+\item Collect the data (more is always better in this
 analyst’s mind but more does not always mean easier or better results).
 \item In general, more recent data is
 better and the data need to be consistent. \item Don’t skimp on cleaning the data. While this may end up
@@ -44,6 +65,7 @@ taking the most time, it is critical and erroneous data will create erroneous re
 \begin{frame}
 	\frametitle{Step 2 : Processing the Data}
 \Large
+\textbf{Transforming the Data}
 \begin{itemize}
 \item Transforming the
 data is also worth the time and effort to improve the modeling process including such things as:
@@ -51,8 +73,8 @@ data is also worth the time and effort to improve the modeling process including
 \item[$\ast$] Converting non-numerical data to numeric (or vice versa)
 \item[$\ast$] Standardizing thing such as coding, definitions, costs, combining variables, etc.
 \end{itemize}
-\item Predixion gives you tools, built into the software, to help you analyze, clean, and classify your data on
-the front end.
+%\item Predixion gives you tools, built into the software, to help you analyze, clean, and classify your data on
+% the front end.
 \end{itemize}
 
 \end{frame}
@@ -82,7 +104,7 @@ your own data you will find that certain types of data and certain types of anal
 themselves more or less to certain types of modeling. 
 \item But if you are just starting out, you can use the
 software to guide you in the choice of a model or simply choose to run all the models against your data.
-Once done, run the model and move on to step 4.
+\item Once done, run the model and move on to step 4.
 	\end{itemize}
 
 \end{frame}
@@ -91,9 +113,10 @@ Once done, run the model and move on to step 4.
 \frametitle{Step 4 : Evaluate the Initial Model}
 \Large
 \begin{itemize}
-\item Step 4 is to evaluate the initial results. Are the results acceptable? Are they what you were expecting
-to see? Do you understand the results? 
-\item Do they answer the question you are trying to answer? 
+\item Step 4 is to evaluate the initial results. 
+\item \textit{Are the results acceptable? Are they what you were expecting
+to see? Do you understand the results?} 
+\item Most Importantly - Do they answer the question you are trying to answer? 
 \item If the
 answer is yes, then move on to the next step.
 \end{itemize}
@@ -114,6 +137,8 @@ better understand your data and your environment
 \end{frame}
 %============================================================%
 \begin{frame}
+\frametitle{Step 4 : Evaluate the Initial Model}
+\Large
 \begin{itemize}
 \item Part of the learning process may be to try and not “boil the ocean” with your models.
 \item Think about
@@ -138,10 +163,13 @@ the entire dataset against the selected model and re-examine the results
 %============================================================%
 \begin{frame}
 \frametitle{Step 6 : Testing the Model}
-Step 6 is to test the final model. This is another one of those things that often seems not to get done.
-It is important to test the final model and the only way to do so is to take the selected model and run it
+\begin{itemize}
+\item Step 6 is to test the final model. This is another one of those things that often seems not to get done.
+\item It is important to test the final model and the only way to do so is to take the selected model and run it
 against a second, unrelated dataset (e.g. - the validation dataset or the portion of the dataset that was
 held back for this purpose) and assess the results.
+\end{itemize}
+
 \end{frame}
 %============================================================%
 \begin{frame}
@@ -161,10 +189,24 @@ model again.
 %============================================================%
 \begin{frame}
 \frametitle{Step 7 : Use the Model}
-Step 7 is to apply the model and run the prediction. There are actually two parts to this. One is done if
+\Large
+\begin{itemize}
+\item Step 7 is to apply the model and run the prediction. 
+\item There are actually two parts to this. 
+\item One is done if
 you want to refine the model then you can use the output from the model to determine next steps and
-potential intervention or changes. Continue to test the model as much or as often as needed. But when
-you are satisfied, please do two things:
+potential intervention or changes. 
+\item Continue to test the model as much or as often as needed. 
+\end{itemize}
+
+
+\end{frame}
+%============================================================%
+\begin{frame}
+	\frametitle{Step 7 : Use the Model}
+	\Large
+When
+you are satisfied, do two things:
 \begin{itemize}
 \item[1] Run the necessary measures to test the final accuracy of the model (see our next discussion
 points)
