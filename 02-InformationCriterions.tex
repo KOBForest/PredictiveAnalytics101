@@ -1,0 +1,155 @@
+% % - 02-InformationCriterions
+
+\documentclass[PredictiveAnalytics101.tex]{subfiles} 
+\begin{document}
+	%================================================ %
+	\begin{frame}
+		\frametitle{Akaike Information Criterion}
+		
+		\textbf{AIC}
+		\begin{itemize}
+			\item Akaike's information criterionis a measure of the goodness of fit of
+			an estimated statistical model. 
+			\item The AIC was developed by Hirotsugu Akaike under the name of ``an information criterion" in 1971. 
+			\item The AIC is a \textbf{\textit{model selection}} tool i.e. a method of comparing two
+			or more candidate regression models. 
+			\item The AIC methodology attempts to find the model that best explains the data with a minimum of parameters. (i.e. in keeping with the law of parsimony)
+		\end{itemize}
+		
+	\end{frame}
+	%================================================ %
+	\begin{frame}
+		\Large
+		\begin{itemize}
+			\item The AIC is calculated using the "likelihood function" and the number of parameters ( Likelihood function : not on course). 
+			\item The likelihood value is generally given in code output, as a complement to the AIC.
+			\item Given a data set, several competing models may be ranked according to their AIC, with the one having the lowest AIC being the best. 
+			\item (Although, a difference in AIC values of less than two is considered negligible).
+		\end{itemize}
+		
+	\end{frame}
+	%================================================ %
+	\begin{frame}
+		\frametitle{Akaike Information Criterion}
+		\Large
+		\begin{itemize}
+			\item The Akaike information criterion is a measure of the relative goodness of fit of a statistical model. 
+			\item It was developed by Hirotsugu Akaike, under the name of "an information criterion" (AIC), and was first published by Akaike in 1974.
+		\end{itemize}
+		
+		\bigskip
+		%AIC provides a means for comparison among modelsÂa tool for model selection.
+		%\bigskip
+		%AIC is good for prediction.\\
+		
+		\[\mbox{AIC} = 2p - 2\ln(L)\]
+	\end{frame}
+	%================================================ %
+	\begin{frame}
+		\frametitle{Akaike Information Criterion}
+		\Large
+		\begin{itemize}
+			\item $p$ is the number of free model parameters.
+			\item $L$ is the value of the Likelihood function for the model in question.
+			\item For AIC to be optimal, $n$ must be large compared to $p$.\\
+		\end{itemize}
+	\end{frame}
+	%================================================ %
+\begin{frame}
+\frametitle{Information Criterions}
+
+
+We define two types of information criterion: the Bayesian Information
+Criterion (BIC) and the Akaike Information Criterion (AIC). In AIC and BIC, we choose the model that
+has the minimum value of:
+\[AIC = −2log(L)+2m,\]
+\[BIC = −2log(L)+mlogn\]
+
+where
+\begin{itemize}
+\item L is the likelihood of the data with a certain model,
+\item n is the number of observations and
+\item m is the number of parameters in the model.
+\end{itemize}
+\end{frame}
+%================================================ %
+\begin{frame}
+\frametitle{AIC}
+\Large
+\begin{itemize}
+\item The Akaike information criterion is a measure of the relative \textbf{goodness of fit} of a statistical model.
+
+\item When using the AIC for selecting the parametric model class, choose
+the model for which the AIC value is lowest.
+\end{itemize}
+\end{frame}
+%================================================ %
+\begin{frame}
+\frametitle{Schwarz's Bayesian Information Criterion}
+An alternative to the AIC is the Schwarz BIC, which additionally takes into account the sample size $n$.
+
+\[\mbox{BIC} = p\ln{n} - 2\ln(L)\]
+\end{frame}
+%================================================ %
+\begin{frame}
+
+\frametitle{AIC and BIC in Two-Step Cluster Analysis}
+
+(Removed from Last Week's Class due to Version Update)
+
+Two-Step Cluster Analysis guides the decision of how many clusters to retain from the data by
+calculating measures-of-fit such as \textbf{\textit{Akaikes Information Criterion (AIC)}} or \textbf{\textit{Bayes Information Criterion (BIC)}}.
+\end{frame}
+%================================================ %
+\begin{frame}
+\Large
+\begin{itemize}
+\item 
+These are relative measures of goodness-of-fit and are used to compare different
+solutions with different numbers of segments.(``Relative" means that these criteria
+are not scaled on a range of, for example, 0 to 1 but can generally take any value.)
+
+\item 
+\textbf{\textit{Important}}: Compared to an alternative solution with a different number of segments, smaller
+values in AIC or BIC indicate an increased fit.
+\end{itemize}
+\end{frame}
+%================================================ %
+\begin{frame}
+SPSS computes solutions for different segment numbers (up to the maximum number of segments specified before) and
+chooses the appropriate solution by looking for the smallest value in the chosen
+criterion. However, which criterion should we choose?
+\begin{itemize}
+\item AIC is well-known for
+overestimating the correct number of segments
+\item BIC has a slight tendency
+to underestimate this number.
+\end{itemize}
+
+Thus, it is worthwhile comparing the clustering
+outcomes of both criteria and selecting a smaller number of segments than
+actually indicated by AIC. Nevertheless, when running two separate analyses,
+one based on AIC and the other based on BIC, SPSS usually renders the same
+results.
+\end{frame}
+%================================================ %
+\begin{frame}
+Once you make some choices or do nothing and go with the defaults, the clusters are
+formed. At this point, you can consider whether the number of clusters is ``good". If
+automated cluster selection is used, SPSS prints a table of statistics for different
+numbers of clusters, an excerpt of which is shown in the figure below. You are interested
+in finding the number of clusters at which the Schwarz BIC becomes small , but also the change in BIC between
+adjacent number of clusters is small. 
+
+The decision of how much benefit accrued by another cluster is very subjective. In addition to the BIC, a high ratio of distance of measures is desirable. In the figure below, the number of clusters with this highest ratio is three.
+
+%\begin{figure}[h!]
+%\begin{centering}
+%  % Requires \usepackage{graphicx}
+%  \includegraphics[width=10cm]{TwoStep1.jpg}\\
+%  \caption{Schwarz Bayesian Information Criterion}
+%\end{centering}
+%\end{figure}
+\end{frame}
+
+\end{document}
