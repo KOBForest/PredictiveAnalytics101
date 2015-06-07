@@ -1,0 +1,248 @@
+\documentclass{beamer}
+
+\usepackage{subfiles}
+\usepackage{framed}
+\usepackage{graphicx}
+\usepackage{amsmath}
+
+
+\begin{document}
+%==============================================%
+\subfile{00-leadoutslides.tex}
+% A Few community announcements
+%  - Big Data Spain
+%  - EARL
+%  - CSO Jobs
+%  - PyCon Ireland
+%==============================================%
+% \subfile{01-Introduction.tex}
+%  Discussion of Predictive Analytics
+%  Machine Learning
+
+
+%=================================================================================%
+
+% \subfile{01-ModelBuilding.tex}
+
+% 7 Step Process
+
+
+%==============================================%
+% \subfile{01-learningtypes.tex}
+
+% Supervised and Unsupervised Learning
+% What is the difference?
+%==============================================%
+% \subfile{01-problemtypes.tex}
+
+% Classification and Regression
+% Binary Classification Problems
+% Logistic Regression
+
+%==============================================%
+
+% What is Distance Theory
+% - Euclidean Distance
+% - Mahalanobis Distance
+% - Nearest Neighbour
+
+%==============================================%
+
+%\subfile{02-clustering.tex}
+% Quick Discussion of Clustering Analysis
+% Customer Segmentation
+
+%==============================================%
+% \subfile{02-ModelAppraisal-part1.tex}
+
+% Confusion Matrix
+% Accuracy Precision Recall
+% F-measures
+% Cost of MisClassification
+% True Positive Rate
+% Specificity and Sensitivitiy
+
+
+%==============================================%
+% \subfile{02-ModelAppraisal-part3.tex}
+%==============================================%
+% \subfile{02-ModelAppraisal-part2.tex}
+
+% Graphical Methods
+% ROC Curves
+% Lift
+%==============================================%
+% \subfile{03-LawOfParsimony.tex}
+%\subfile{03-ImprovingModels.tex}
+
+
+% Overfitting
+% Testing and Training
+% k-folds Cross Validation
+
+%===============================================================================%
+
+
+% - Dimensionality Reduction
+
+% - Feature Selection / Variable Selection
+
+
+%==============================================%
+\begin{frame}
+  \frametitle{Introduction}
+  \begin{enumerate}
+  \item Get Data
+  \item Clean Data
+  \item Model Data
+  \item Make Predictions
+  \item Test on More Data
+  \item Goto 2
+  \end{enumerate}
+\end{frame}
+\begin{frame}
+  \frametitle{Why should you care?}
+  \begin{itemize}
+  \item All models are wrong, but some are useful
+  \item If you can predict an outcome of interest, you can make money :)
+  \item Or get published in peer-reviewed journals!
+  \end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{Steps}
+\begin{enumerate}
+\item Defining the Problem
+\item Collecting the Data
+\item Processing The Data
+\item Run an initial model
+\item Evaluate the initial model
+\item Select a final model
+\item Testing the Model
+\item Use the Model
+\end{enumerate}
+\end{frame}
+\begin{frame}
+  \frametitle{Defining the Problem}
+  \begin{itemize}
+  \item Entire books have been written about this
+  \item Sample Problem: Optimism appears to be negatively correlated to health 
+  \end{itemize}
+\end{frame}
+\begin{frame}
+  \frametitle{Collecting the Data}
+  \begin{itemize}
+  \item Surveys
+  \item Experiments
+  \item Web Scraping
+  \item Observational Data (logs etc)
+  \item Standard Data
+  \item 
+  \end{itemize}
+\end{frame}
+\begin{frame}
+  \frametitle{Sample Problem Data}
+  \begin{itemize}
+  \item Two samples (N=392, N=1101)
+  \item All survey data (optimism, health and other health-related variables)
+  \item Problem: Optimism is always positively correlated with Health, but this is not true in the sample
+  \end{itemize}
+\end{frame}
+<<options, echo=FALSE, results='hide'>>=
+knitr::opts_chunk$set(echo=TRUE, cache=FALSE)
+options(width=50)
+@ 
+\begin{frame}
+  \frametitle{Problem Graph}
+  \begin{columns}
+    \begin{column}{0.5\textwidth}
+<<data, results='hide'>>=
+hom <- read.csv("homfinal.csv") 
+source("recode.R")
+
+@         
+    \end{column}
+    \begin{column}{0.5\textwidth}
+<<optplot, echo=FALSE, warning=FALSE>>=
+require(ggplot2)
+ggplot(hom1, aes(x=optimism, y=generalhealth))+geom_point()+geom_smooth(method="lm")
+@       
+    \end{column}
+  \end{columns}
+
+\end{frame}
+\begin{frame}
+  \frametitle{Processing the Data}
+  \begin{itemize}
+  \item Most importantly, split your data
+  \item You need at a minimum, three splits
+  \item Training Data (approx 60\%)
+  \item Test Data (approx 20\%)
+  \item Validation Data (approx 20\%)
+  \item If you don't have this, you will fail to predict accurately
+  \end{itemize}
+\end{frame}
+\begin{frame}
+  \frametitle{Splitting Data}
+
+<<splitdata, results='hide', tidy=TRUE>>=
+set.seed(23)
+
+require(caret)
+
+hom.full <- na.omit(hom1)
+
+split <- with(hom.full, 
+              createDataPartition(optimism, times=1, p=0.6, list=FALSE))
+
+hom.train <- hom.full[split,]
+
+hom.rest <- hom.full[-split,]
+
+split2 <- with(hom.rest, 
+               createDataPartition(optimism, times=1, p=0.5, list=FALSE))
+
+hom.test <- hom.rest[split2,]
+
+hom.validation <- hom.rest[-split2,]
+
+@       
+
+
+\end{frame}
+\begin{frame}
+  \frametitle{Cleaning the Data}
+  \begin{itemize}
+  \item All data is wrong
+    
+  \item You need to make sure that the data is not wrong in as many obvious ways as possible
+    
+  \item Graphs, summaries et al are great for this
+    
+  \item Additionally, you may need different sets of data for different problems
+  \end{itemize}
+\end{frame}
+<<packages, echo=FALSE, results='hide'>>=
+require(psych)
+@ 
+\begin{frame}
+  \frametitle{Examples}
+<<pairsplot, echo=FALSE, out.height="0.8\\textheight">>=
+totals <- hom.train[,77:86]
+pairs.panels(totals)
+@       
+
+
+
+\end{frame}
+\end{document}
+%- http://www.avanade.com/~/media/documents/bi-white-paper-healthcare-analytics-practical-predictive-analytics-101-may-2013.pdf
+
+
+
+
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:
