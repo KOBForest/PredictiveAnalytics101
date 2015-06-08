@@ -265,7 +265,7 @@ ggplot(totals.m, aes(x=variable, y=value))+geom_boxplot()+theme(axis.text.x=elem
 <<caretcode, tidy=TRUE, cache=TRUE, results="hide">>=
 hom.lm.train <- suppressWarnings(train(optimism~., method="lm", data=hom.train))
 train.totals <- dplyr::select(hom.train, 77:86)
-hom.lm.train.totals <- train(optimism~., method="lm", data=train.totals, preProcess="scale")
+hom.lm.train.totals <- train(optimism~., method="lm", data=train.totals, preProcess="scale", tuneLength=5)
 
 @       
 
@@ -299,8 +299,8 @@ plot(varImp(hom.lm.train.totals))
     \end{column}
     \begin{column}{0.5\textwidth}
 <<moremodels, format="markup", cache=TRUE>>=
-hom.rf.train.totals <- train(optimism~., method="rf", data=train.totals, preProcess="scale")
-hom.glmnet.train.totals <- train(optimism~., method="glmnet", data=train.totals, preProcess="scale")
+hom.rf.train.totals <- train(optimism~., method="rf", data=train.totals, preProcess="scale", tuneLength=5)
+hom.glmnet.train.totals <- train(optimism~., method="glmnet", data=train.totals, preProcess="scale", tuneLength=5)
 @       
     \end{column}
   \end{columns}
@@ -311,7 +311,35 @@ hom.glmnet.train.totals <- train(optimism~., method="glmnet", data=train.totals,
     \begin{column}{0.5\textwidth}
 <<varimpRF, echo=FALSE>>=
 plot(varImp(hom.glmnet.train.totals))
+
 @       
+    \end{column}
+    \begin{column}{0.5\textwidth}
+<<varimprf, echo=FALSE>>=
+varImpPlot(hom.rf.train.totals$finalModel)
+@       
+    \end{column}
+  \end{columns}
+\end{frame}
+\begin{frame}
+  \frametitle{Yet More Models}
+  \begin{columns}
+    \begin{column}{0.5\textwidth}
+<<glmboost, echo=FALSE>>=
+hom.rpart.train.totals <- train(optimism~., method="rpart", data=train.totals, preProcess="scale", tuneLength=5)
+hom.glmboost.train.totals <- train(optimism~., method="glmboost", data=train.totals, preProcess="scale", tuneLength=5)
+@       
+    \end{column}
+    \begin{column}{0.5\textwidth}
+      \begin{itemize}
+      \item These ones suck too :(
+        
+      \item So we've tried standard linear models, some non-linear models and some penalised models
+        
+      \item Even with the training set, we struggle to achieve greater than 22\% R-Sq (which is pretty awful in and of itself)
+        
+      \item What next? 
+      \end{itemize}
     \end{column}
   \end{columns}
 \end{frame}
