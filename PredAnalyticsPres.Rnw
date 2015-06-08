@@ -218,11 +218,12 @@ hom.validation <- hom.rest[-split2,]
     
   \item Graphs, summaries et al are great for this
     
-  \item Additionally, you may need different sets of data for different problems
+  \item Additionally, you may need different representations of data for different problems
   \end{itemize}
 \end{frame}
 <<packages, echo=FALSE, results='hide'>>=
 require(psych)
+require(xtable)
 @ 
 \begin{frame}
   \frametitle{Examples}
@@ -231,8 +232,88 @@ totals <- hom.train[,77:86]
 pairs.panels(totals)
 @       
 
+\end{frame}
+\begin{frame}
+  \frametitle{Scale Problems}
+<<totals, echo=FALSE, out.height="0.8\\textheight">>=
+totals.m <- suppressMessages(melt(totals))
+ggplot(totals.m, aes(x=variable, y=value))+geom_boxplot()+theme(axis.text.x=element_text(angle=45))
 
+@   
+\end{frame}
+\begin{frame}
+  \frametitle{Learnings}
+  \begin{itemize}
+  \item The items are on wildly different scales
+    
+  \item The values are numerical, but from a fixed set
+    
+  \item Responses to questions on a number of difficult scales
+  \end{itemize}
+\end{frame}
+\begin{frame}
+  \frametitle{Modelling!}
+  \begin{columns}
+    \begin{column}{0.5\textwidth}
+      \begin{itemize}
+      \item Really, cleaning the data takes a lot longer and is a part of the process throughout the analysis
+        
+      \item We'll skip that though, cos models are much more interesting
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+<<caretcode, tidy=TRUE, cache=TRUE, results="hide">>=
+hom.lm.train <- suppressWarnings(train(optimism~., method="lm", data=hom.train))
+train.totals <- dplyr::select(hom.train, 77:86)
+hom.lm.train.totals <- train(optimism~., method="lm", data=train.totals, preProcess="scale")
 
+@       
+
+    \end{column}
+  \end{columns}
+\end{frame}
+\begin{frame}
+  \frametitle{Model Predictions}
+  \begin{columns}
+    \begin{column}{0.5\textwidth}
+<<outputlm, echo=FALSE, results="asis">>=
+print(xtable(summary(hom.lm.train.totals)), scalebox=0.5)
+@       
+    \end{column}
+    \begin{column}{0.5\textwidth}
+<<varImpPlot, echo=FALSE>>=
+plot(varImp(hom.lm.train.totals))
+@       
+    \end{column}
+  \end{columns}
+\end{frame}
+\begin{frame}
+  \frametitle{This Model Sucks}
+  \begin{columns}
+    \begin{column}{0.5\textwidth}
+      \begin{itemize}
+      \item The answer to this problem is clearly to fit more models
+        
+      \item Lets try regularised regression and random forest
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+<<moremodels, format="markup", cache=TRUE>>=
+hom.rf.train.totals <- train(optimism~., method="rf", data=train.totals, preProcess="scale")
+hom.glmnet.train.totals <- train(optimism~., method="glmnet", data=train.totals, preProcess="scale")
+@       
+    \end{column}
+  \end{columns}
+\end{frame}
+\begin{frame}
+  \frametitle{Do these Models Suck?}
+  \begin{columns}
+    \begin{column}{0.5\textwidth}
+<<varimpRF, echo=FALSE>>=
+plot(varImp(hom.glmnet.train.totals))
+@       
+    \end{column}
+  \end{columns}
 \end{frame}
 \end{document}
 %- http://www.avanade.com/~/media/documents/bi-white-paper-healthcare-analytics-practical-predictive-analytics-101-may-2013.pdf
