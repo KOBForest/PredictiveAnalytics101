@@ -310,13 +310,13 @@ hom.glmnet.train.totals <- train(optimism~., method="glmnet", data=train.totals,
   \begin{columns}
     \begin{column}{0.5\textwidth}
 <<varimpRF, echo=FALSE>>=
-plot(varImp(hom.glmnet.train.totals))
+plot(varImp(hom.glmnet.train.totals), main="Glmnet variable importance")
 
 @       
     \end{column}
     \begin{column}{0.5\textwidth}
 <<varimprf, echo=FALSE>>=
-varImpPlot(hom.rf.train.totals$finalModel)
+varImpPlot(hom.rf.train.totals$finalModel, main="Random Forest Variable Importance")
 @       
     \end{column}
   \end{columns}
@@ -327,7 +327,7 @@ varImpPlot(hom.rf.train.totals$finalModel)
     \begin{column}{0.5\textwidth}
 <<glmboost, echo=FALSE>>=
 hom.rpart.train.totals <- train(optimism~., method="rpart", data=train.totals, preProcess="scale", tuneLength=5)
-hom.glmboost.train.totals <- train(optimism~., method="glmboost", data=train.totals, preProcess="scale", tuneLength=5)
+hom.glmboost.train.totals <- train(optimism~., method="glmboost", data=train.totals, preProcess=c("scale", "center"),  tuneLength=10, metric="Rsquared")
 @       
     \end{column}
     \begin{column}{0.5\textwidth}
