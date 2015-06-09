@@ -97,7 +97,7 @@
   \item Model Data
   \item Make Predictions
   \item Test on More Data
-  \item Goto 2
+  \item Goto 1
   \end{enumerate}
 \end{frame}
 \begin{frame}
@@ -136,7 +136,6 @@
   \item Web Scraping
   \item Observational Data (logs etc)
   \item Standard Data
-  \item 
   \end{itemize}
 \end{frame}
 \begin{frame}
@@ -158,12 +157,12 @@ options(width=50)
 <<data, results='hide'>>=
 hom <- read.csv("homfinal.csv") 
 source("recode.R")
-
+system("wc -l recode.R")
 @         
     \end{column}
     \begin{column}{0.5\textwidth}
 <<optplot, echo=FALSE, warning=FALSE>>=
-require(ggplot2)
+suppressMessage(require(ggplot2))
 ggplot(hom1, aes(x=optimism, y=generalhealth))+geom_point()+geom_smooth(method="lm")
 @       
     \end{column}
@@ -187,7 +186,7 @@ ggplot(hom1, aes(x=optimism, y=generalhealth))+geom_point()+geom_smooth(method="
 <<splitdata, results='hide', tidy=TRUE>>=
 set.seed(23)
 
-require(caret)
+suppressMessages(require(caret))
 
 hom.full <- na.omit(hom1)
 
@@ -222,8 +221,9 @@ hom.validation <- hom.rest[-split2,]
   \end{itemize}
 \end{frame}
 <<packages, echo=FALSE, results='hide'>>=
-require(psych)
-require(xtable)
+suppressMessages(require(psych))
+suppressMessages(require(xtable))
+suppressMessages(require(reshape2))
 @ 
 \begin{frame}
   \frametitle{Examples}
@@ -252,6 +252,26 @@ ggplot(totals.m, aes(x=variable, y=value))+geom_boxplot()+theme(axis.text.x=elem
   \end{itemize}
 \end{frame}
 \begin{frame}
+  \frametitle{Setting Up Controls}
+  \begin{columns}
+    \begin{column}{0.5\textwidth}
+      \begin{itemize}
+      \item Set up the way in which we'll train our models
+        
+      \item We could also specify the number of different parameters to estimate
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+<<controls, tidy=TRUE>>=
+ctrl = trainControl(method="repeatedcv", number=10, repeats=5, selectionFunction = "oneSE")
+tl <- 10
+
+@       
+    \end{column}
+    
+  \end{columns}
+\end{frame}
+\begin{frame}
   \frametitle{Modelling!}
   \begin{columns}
     \begin{column}{0.5\textwidth}
@@ -263,9 +283,10 @@ ggplot(totals.m, aes(x=variable, y=value))+geom_boxplot()+theme(axis.text.x=elem
     \end{column}
     \begin{column}{0.5\textwidth}
 <<caretcode, tidy=TRUE, cache=TRUE, results="hide">>=
-hom.lm.train <- suppressWarnings(train(optimism~., method="lm", data=hom.train))
+hom.lm.train <- suppressWarnings(
+    train(optimism~., method="lm", data=hom.train, trControl=ctrl))
 train.totals <- dplyr::select(hom.train, 77:86)
-hom.lm.train.totals <- train(optimism~., method="lm", data=train.totals, preProcess="scale", tuneLength=5)
+hom.lm.train.totals <- train(optimism~., method="lm", data=train.totals, preProcess="scale", tuneLength=tl, trControl=ctrl)
 
 @       
 
@@ -299,8 +320,8 @@ plot(varImp(hom.lm.train.totals))
     \end{column}
     \begin{column}{0.5\textwidth}
 <<moremodels, format="markup", cache=TRUE>>=
-hom.rf.train.totals <- train(optimism~., method="rf", data=train.totals, preProcess="scale", tuneLength=5)
-hom.glmnet.train.totals <- train(optimism~., method="glmnet", data=train.totals, preProcess="scale", tuneLength=5)
+hom.rf.train.totals <- suppressMessages(train(optimism~., method="rf", data=train.totals, preProcess="scale", tuneLength=tl, trControl=ctrl))
+hom.glmnet.train.totals <- suppressMessages(train(optimism~., method="glmnet", data=train.totals, preProcess="scale", tuneLength=tl, trControl=ctrl))
 @       
     \end{column}
   \end{columns}
@@ -326,8 +347,8 @@ varImpPlot(hom.rf.train.totals$finalModel, main="Random Forest Variable Importan
   \begin{columns}
     \begin{column}{0.5\textwidth}
 <<glmboost, echo=FALSE>>=
-hom.rpart.train.totals <- train(optimism~., method="rpart", data=train.totals, preProcess="scale", tuneLength=5)
-hom.glmboost.train.totals <- train(optimism~., method="glmboost", data=train.totals, preProcess=c("scale", "center"),  tuneLength=10, metric="Rsquared")
+hom.rpart.train.totals <- train(optimism~., method="rpart", data=train.totals, preProcess="scale", tuneLength=tl, trControl=ctrl)
+hom.glmboost.train.totals <- train(optimism~., method="glmboost", data=train.totals, preProcess=c("scale", "center"),  tuneLength=tl, metric="Rsquared", trControl=ctrl)
 @       
     \end{column}
     \begin{column}{0.5\textwidth}
@@ -336,12 +357,24 @@ hom.glmboost.train.totals <- train(optimism~., method="glmboost", data=train.tot
         
       \item So we've tried standard linear models, some non-linear models and some penalised models
         
-      \item Even with the training set, we struggle to achieve greater than 22\% R-Sq (which is pretty awful in and of itself)
+      \item Even with the training set, we struggle to achieve greater than .3\% R-Sq (which is pretty awful in and of itself)
         
       \item What next? 
       \end{itemize}
     \end{column}
   \end{columns}
+\end{frame}
+\begin{frame}
+  \frametitle{Redefining the Problem}
+  \begin{itemize}
+  \item We're currently using the totals as our training data
+    
+  \item This is typical in academic (psychological) research
+    
+  \item However, it essentially means that we are throwing away the majority of the information in the data
+    
+  \item So, in order to improve predictive accuracy, lets start using as much of the data as possible
+  \end{itemize}
 \end{frame}
 \end{document}
 %- http://www.avanade.com/~/media/documents/bi-white-paper-healthcare-analytics-practical-predictive-analytics-101-may-2013.pdf
