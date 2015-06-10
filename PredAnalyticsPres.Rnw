@@ -162,7 +162,7 @@ system("wc -l recode.R")
     \end{column}
     \begin{column}{0.5\textwidth}
 <<optplot, echo=FALSE, warning=FALSE>>=
-suppressMessage(require(ggplot2))
+suppressMessages(require(ggplot2))
 ggplot(hom1, aes(x=optimism, y=generalhealth))+geom_point()+geom_smooth(method="lm")
 @       
     \end{column}
@@ -182,6 +182,9 @@ ggplot(hom1, aes(x=optimism, y=generalhealth))+geom_point()+geom_smooth(method="
 \end{frame}
 \begin{frame}
   \frametitle{Splitting Data}
+<<removefakedata, echo=FALSE, results="hide">>=
+hom1 <- hom1[,grep("^[A-Z][a-z]+", x=names(hom1), invert=TRUE)]
+@   
 
 <<splitdata, results='hide', tidy=TRUE>>=
 set.seed(23)
@@ -228,7 +231,7 @@ suppressMessages(require(reshape2))
 \begin{frame}
   \frametitle{Examples}
 <<pairsplot, echo=FALSE, out.height="0.8\\textheight">>=
-totals <- hom.train[,77:86]
+totals <- hom.train[,60:69]
 pairs.panels(totals)
 @       
 
@@ -263,9 +266,12 @@ ggplot(totals.m, aes(x=variable, y=value))+geom_boxplot()+theme(axis.text.x=elem
     \end{column}
     \begin{column}{0.5\textwidth}
 <<controls, tidy=TRUE>>=
+suppressMessages(require(doMC))
+registerDoMC(cores=3)
 ctrl = trainControl(method="repeatedcv", number=10, repeats=5, selectionFunction = "oneSE")
-tl <- 10
-
+tl <- 8
+Metric <- "Rsquared"
+moreArgs <- c(fitBest=FALSE, returnData=TRUE)
 @       
     \end{column}
     
@@ -282,11 +288,10 @@ tl <- 10
       \end{itemize}
     \end{column}
     \begin{column}{0.5\textwidth}
-<<caretcode, tidy=TRUE, cache=TRUE, results="hide">>=
-hom.lm.train <- suppressWarnings(
-    train(optimism~., method="lm", data=hom.train, trControl=ctrl))
-train.totals <- dplyr::select(hom.train, 77:86)
-hom.lm.train.totals <- train(optimism~., method="lm", data=train.totals, preProcess="scale", tuneLength=tl, trControl=ctrl)
+<<caretcode, tidy=TRUE,  results="hide">>=
+hom.lm.train <- suppressWarnings(train(optimism~., method="lm", data=hom.train, trControl=ctrl, metric=Metric, fitBest=FALSE, returnData=TRUE))
+train.totals <- dplyr::select(hom.train, 60:69)
+hom.lm.train.totals <- train(optimism~., method="lm", data=train.totals, preProcess="scale", tuneLength=tl, trControl=ctrl, metric=Metric, fitBest=FALSE, returnData=TRUE)
 
 @       
 
@@ -296,12 +301,12 @@ hom.lm.train.totals <- train(optimism~., method="lm", data=train.totals, preProc
 \begin{frame}
   \frametitle{Model Predictions}
   \begin{columns}
-    \begin{column}{0.5\textwidth}
+    \begin{column}{0.4\textwidth}
 <<outputlm, echo=FALSE, results="asis">>=
 print(xtable(summary(hom.lm.train.totals)), scalebox=0.5)
 @       
     \end{column}
-    \begin{column}{0.5\textwidth}
+    \begin{column}{0.6\textwidth}
 <<varImpPlot, echo=FALSE>>=
 plot(varImp(hom.lm.train.totals))
 @       
@@ -319,9 +324,9 @@ plot(varImp(hom.lm.train.totals))
       \end{itemize}
     \end{column}
     \begin{column}{0.5\textwidth}
-<<moremodels, format="markup", cache=TRUE>>=
-hom.rf.train.totals <- suppressMessages(train(optimism~., method="rf", data=train.totals, preProcess="scale", tuneLength=tl, trControl=ctrl))
-hom.glmnet.train.totals <- suppressMessages(train(optimism~., method="glmnet", data=train.totals, preProcess="scale", tuneLength=tl, trControl=ctrl))
+<<moremodels, format="markup",  results="hide">>=
+hom.rf.train.totals <- suppresWarnings(suppressMessages(train(optimism~., method="rf", data=train.totals, preProcess="scale", tuneLength=tl, trControl=ctrl, metric=Metric, fitBest=FALSE, returnData=TRUE)))
+hom.glmnet.train.totals <- suppressWarnings(suppressMessages(train(optimism~., method="glmnet", data=train.totals, preProcess="scale", tuneLength=tl, trControl=ctrl, metric=Metric, fitBest=FALSE, returnData=TRUE)))
 @       
     \end{column}
   \end{columns}
@@ -347,8 +352,8 @@ varImpPlot(hom.rf.train.totals$finalModel, main="Random Forest Variable Importan
   \begin{columns}
     \begin{column}{0.5\textwidth}
 <<glmboost, echo=FALSE>>=
-hom.rpart.train.totals <- train(optimism~., method="rpart", data=train.totals, preProcess="scale", tuneLength=tl, trControl=ctrl)
-hom.glmboost.train.totals <- train(optimism~., method="glmboost", data=train.totals, preProcess=c("scale", "center"),  tuneLength=tl, metric="Rsquared", trControl=ctrl)
+hom.gam.train.totals <- suppressWarnings(suppressMessages(train(optimism~., method="gam", data=train.totals, preProcess="scale", tuneLength=tl, trControl=ctrl, metric=Metric, fitBest=FALSE, returnData=TRUE)))
+hom.pls.train.totals <- suppressMessages(train(optimism~., method="pls", data=train.totals, preProcess=c("scale", "center"),  tuneLength=tl, trControl=ctrl, metric=Metric, fitBest=FALSE, returnData=TRUE))
 @       
     \end{column}
     \begin{column}{0.5\textwidth}
@@ -375,6 +380,112 @@ hom.glmboost.train.totals <- train(optimism~., method="glmboost", data=train.tot
     
   \item So, in order to improve predictive accuracy, lets start using as much of the data as possible
   \end{itemize}
+\end{frame}
+\begin{frame}
+  \frametitle{New Features}
+  \begin{columns}
+    
+    \begin{column}{0.5\textwidth}
+<<samemodelsdifferentdata, eval=2>>=
+hom.glmnet.train <- suppressWarnings(train(optimism~., method="glmnet", data=hom.train, trControl=ctrl, metric=Metric, preProcess=c("scale", "center"), fitBest=FALSE, returnData=TRUE))
+hom.rf.train <- suppressMessages(suppressWarnings(train(optimism~., method="rf", data=hom.train, trControl=ctrl, metric=Metric, fitBest=FALSE, returnData=TRUE)))
+@       
+    \end{column}
+    \begin{column}{0.5\textwidth}
+<<actuallyprint, echo=FALSE, results="hide">>=
+rf.pr <- as.data.frame(print(hom.rf.train))
+rownames(rf.pr) <- 1:nrow(rf.pr)
+rf.pr2 <- dplyr::select(rf.pr, mtry, RMSE, Rsquared)
+@       
+<<printoutput, echo=FALSE, results="asis">>=
+print(xtable(rf.pr2), scalebox=0.5, include.rownames=FALSE)
+@       
+    \end{column}
+  \end{columns}
+\end{frame}
+\begin{frame}
+  \frametitle{What Actually Happened}
+  \begin{itemize}
+  \item So, remember we took all of the questions as features
+    
+  \item However, the totals are averages of the questions
+    
+  \item Therefore, we can predict the averages perfectly with these features
+    
+  \item They are somewhat unlikely to generalise :)
+    
+  \end{itemize}
+\end{frame}
+\begin{frame}
+  \frametitle{More Modelling!}
+  \begin{columns}
+    \begin{column}{0.5\textwidth}
+<<lotrhide, echo=FALSE, results="hide">>=
+hom.train.opt <- dplyr::select(hom.train, grep("^LOTRQ", x=names(hom.train),invert=TRUE))
+hom.test.opt <- dplyr::select(hom.test, grep("^LOTRQ", x=names(hom.test),invert=TRUE))
+hom.val.opt <- dplyr::select(hom.validation, grep("^LOTRQ", x=names(hom.validation),invert=TRUE))
+@       
+<<removelotr, echo=TRUE, tidy=TRUE>>=
+hom.glmnet.train.opt <- suppressWarnings(train(optimism~., method="glmnet", data=hom.train.opt, trControl=ctrl, metric=Metric, fitBest=FALSE, returnData=TRUE))
+hom.rf.train.opt <- suppressWarnings(train(optimism~., method="rf", data=hom.train.opt, trControl=ctrl, metric=Metric, fitBest=FALSE, returnData=TRUE))
+hom.gam.train.opt <- train(optimism~., method="gam", data=hom.train.opt,  tuneLength=, trControl=ctrl, metric=Metric, fitBest=FALSE, returnData=TRUE)
+hom.pls.train.opt <- train(optimism~., method="pls", data=hom.train.opt, preProcess="scale", tuneLength=tl, trControl=ctrl, metric=Metric, fitBest=FALSE, returnData=TRUE)
+@             
+    \end{column}
+    \begin{column}{0.5\textwidth}
+<<dataprint, echo=FALSE, results="hide">>=
+rf.opt.pr <- as.data.frame(print(hom.rf.train.opt))
+rf.opt.pr2 <- dplyr::select(rf.pr, mtry, RMSE, Rsquared)
+@       
+<<dataoutput, echo=FALSE, results="asis">>=
+print(xtable(rf.opt.pr2), scalebox=0.5, include.rownames=FALSE)
+@ 
+    \end{column}
+  \end{columns}
+\end{frame}
+\begin{frame}
+  \frametitle{Make some Predictions}
+  \begin{columns}
+    \begin{column}{0.5\textwidth}
+<<predictions, echo=TRUE>>=
+glmnet.pred.obs <- data.frame(pred=predict(hom.glmnet.train.opt, newdata=hom.test.opt), obs=hom.test.opt[["optimism"]], Model="glmnet")
+rf.pred.obs <- data.frame(pred=predict(hom.rf.train.opt, newdata=hom.test.opt), obs=hom.test.opt$optimism, Model="rf")
+gam.pred.obs <- data.frame(pred=predict(hom.gam.train.opt, newdata=hom.test.opt), obs=hom.test.opt[["optimism"]], Model="gam")
+pls.pred.obs <- data.frame(pred=predict(hom.pls.train.opt, newdata=hom.test.opt), obs=hom.test.opt[["optimism"]], Model="pls")
+pred.obs.all <- rbind(glmnet.pred.obs, rf.pred.obs, gam.pred.obs, pls.pred.obs)
+@       
+<<pstresample, echo=FALSE>>=
+resampFunc <- function(data)  {
+    ans <- with(data, postResample(pred, obs))
+    
+}
+glmnet.acc <- resampFunc(glmnet.pred.obs)
+pls.acc <- resampFunc(pls.pred.obs)
+gam.acc <- resampFunc(gam.pred.obs)
+rf.acc <- resampFunc(rf.pred.obs)
+acc.all <- as.data.frame(rbind(glmnet.acc, pls.acc, gam.acc, rf.acc))
+
+@ 
+\begin{itemize}
+\item So these models are better, but they still mostly suck
+\end{itemize}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+<<accrmse, echo=FALSE, results="asis">>=
+xtable(acc.all)
+@ 
+    \end{column}
+  \end{columns}
+\end{frame}
+\begin{frame}
+  \frametitle{Predictions Vs Observed}
+<<predvsobs>>=
+ggplot(pred.obs.all, aes(x=pred, y=obs))+geom_point()+geom_smooth(method="lm")+facet_grid(.~Model)
+@   
+\end{frame}
+\begin{frame}
+  \frametitle{These models still suck}
+  
 \end{frame}
 \end{document}
 %- http://www.avanade.com/~/media/documents/bi-white-paper-healthcare-analytics-practical-predictive-analytics-101-may-2013.pdf
