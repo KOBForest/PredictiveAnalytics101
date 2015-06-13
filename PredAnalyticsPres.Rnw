@@ -5,10 +5,13 @@
 \usepackage{graphicx}
 \usepackage{amsmath}
 
+\title{Predictive Analytics 101}
+\author{Richie F. Morrisroe}
 
 \begin{document}
+\maketitle
 %==============================================%
-\subfile{00-leadoutslides.tex}
+%% \subfile{00-leadoutslides.tex}
 % A Few community announcements
 %  - Big Data Spain
 %  - EARL
@@ -89,7 +92,7 @@
 
 
 %==============================================%
-\begin{frame}
+\begin{frame}[fragile]
   \frametitle{Introduction}
   \begin{enumerate}
   \item Get Data
@@ -100,7 +103,7 @@
   \item Goto 1
   \end{enumerate}
 \end{frame}
-\begin{frame}
+\begin{frame}[fragile]
   \frametitle{Why should you care?}
   \begin{itemize}
   \item All models are wrong, but some are useful
@@ -108,7 +111,7 @@
   \item Or get published in peer-reviewed journals!
   \end{itemize}
 \end{frame}
-\begin{frame}
+\begin{frame}[fragile]
 \frametitle{Steps}
 \begin{enumerate}
 \item Defining the Problem
@@ -121,14 +124,14 @@
 \item Use the Model
 \end{enumerate}
 \end{frame}
-\begin{frame}
+\begin{frame}[fragile]
   \frametitle{Defining the Problem}
   \begin{itemize}
   \item Entire books have been written about this
   \item Sample Problem: Optimism appears to be negatively correlated to health 
   \end{itemize}
 \end{frame}
-\begin{frame}
+\begin{frame}[fragile]
   \frametitle{Collecting the Data}
   \begin{itemize}
   \item Surveys
@@ -138,7 +141,7 @@
   \item Standard Data
   \end{itemize}
 \end{frame}
-\begin{frame}
+\begin{frame}[fragile]
   \frametitle{Sample Problem Data}
   \begin{itemize}
   \item Two samples (N=392, N=1101)
@@ -150,11 +153,11 @@
 knitr::opts_chunk$set(echo=TRUE, cache=FALSE)
 options(width=50)
 @ 
-\begin{frame}
+\begin{frame}[fragile]
   \frametitle{Problem Graph}
   \begin{columns}
     \begin{column}{0.5\textwidth}
-<<data, results='hide'>>=
+<<data,  tidy=TRUE>>=
 hom <- read.csv("homfinal.csv") 
 source("recode.R")
 system("wc -l recode.R")
@@ -169,7 +172,7 @@ ggplot(hom1, aes(x=optimism, y=generalhealth))+geom_point()+geom_smooth(method="
   \end{columns}
 
 \end{frame}
-\begin{frame}
+\begin{frame}[fragile]
   \frametitle{Processing the Data}
   \begin{itemize}
   \item Most importantly, split your data
@@ -180,7 +183,7 @@ ggplot(hom1, aes(x=optimism, y=generalhealth))+geom_point()+geom_smooth(method="
   \item If you don't have this, you will fail to predict accurately
   \end{itemize}
 \end{frame}
-\begin{frame}
+\begin{frame}[fragile]
   \frametitle{Splitting Data}
 <<removefakedata, echo=FALSE, results="hide">>=
 hom1 <- hom1[,grep("^[A-Z][a-z]+", x=names(hom1), invert=TRUE)]
@@ -197,21 +200,17 @@ split <- with(hom.full,
               createDataPartition(optimism, times=1, p=0.6, list=FALSE))
 
 hom.train <- hom.full[split,]
-
 hom.rest <- hom.full[-split,]
-
 split2 <- with(hom.rest, 
                createDataPartition(optimism, times=1, p=0.5, list=FALSE))
-
 hom.test <- hom.rest[split2,]
-
 hom.validation <- hom.rest[-split2,]
 
 @       
 
 
 \end{frame}
-\begin{frame}
+\begin{frame}[fragile]
   \frametitle{Cleaning the Data}
   \begin{itemize}
   \item All data is wrong
@@ -228,7 +227,7 @@ suppressMessages(require(psych))
 suppressMessages(require(xtable))
 suppressMessages(require(reshape2))
 @ 
-\begin{frame}
+\begin{frame}[fragile]
   \frametitle{Examples}
 <<pairsplot, echo=FALSE, out.height="0.8\\textheight">>=
 totals <- hom.train[,60:69]
@@ -236,7 +235,7 @@ pairs.panels(totals)
 @       
 
 \end{frame}
-\begin{frame}
+\begin{frame}[fragile]
   \frametitle{Scale Problems}
 <<totals, echo=FALSE, out.height="0.8\\textheight">>=
 totals.m <- suppressMessages(melt(totals))
@@ -244,7 +243,7 @@ ggplot(totals.m, aes(x=variable, y=value))+geom_boxplot()+theme(axis.text.x=elem
 
 @   
 \end{frame}
-\begin{frame}
+\begin{frame}[fragile]
   \frametitle{Learnings}
   \begin{itemize}
   \item The items are on wildly different scales
@@ -254,7 +253,7 @@ ggplot(totals.m, aes(x=variable, y=value))+geom_boxplot()+theme(axis.text.x=elem
   \item Responses to questions on a number of difficult scales
   \end{itemize}
 \end{frame}
-\begin{frame}
+\begin{frame}[fragile]
   \frametitle{Setting Up Controls}
   \begin{columns}
     \begin{column}{0.5\textwidth}
@@ -265,73 +264,89 @@ ggplot(totals.m, aes(x=variable, y=value))+geom_boxplot()+theme(axis.text.x=elem
       \end{itemize}
     \end{column}
     \begin{column}{0.5\textwidth}
-<<controls, tidy=TRUE>>=
+<<controls, tidy=TRUE, out.width="0.5\\textwidth">>=
 suppressMessages(require(doMC))
 registerDoMC(cores=3)
-ctrl = trainControl(method="repeatedcv", number=10, repeats=5, selectionFunction = "oneSE")
+ctrl <- trainControl(
+    method="repeatedcv", 
+    number=10, repeats=5, 
+    selectionFunction = "oneSE")
 tl <- 8
 Metric <- "Rsquared"
-moreArgs <- c(fitBest=FALSE, returnData=TRUE)
+pp <- c("scale", "center")
 @       
     \end{column}
     
   \end{columns}
 \end{frame}
-\begin{frame}
+\begin{frame}[fragile]
   \frametitle{Modelling!}
   \begin{columns}
-    \begin{column}{0.5\textwidth}
-      \begin{itemize}
-      \item Really, cleaning the data takes a lot longer and is a part of the process throughout the analysis
+    %% \begin{column}{0.5\textwidth}
+    %%   \begin{itemize}
+    %%   \item Really, cleaning the data takes a lot longer and is a part of the process throughout the analysis
         
-      \item We'll skip that though, cos models are much more interesting
-      \end{itemize}
-    \end{column}
-    \begin{column}{0.5\textwidth}
-<<caretcode, tidy=TRUE,  results="hide">>=
-hom.lm.train <- suppressWarnings(train(optimism~., method="lm", data=hom.train, trControl=ctrl, metric=Metric, fitBest=FALSE, returnData=TRUE))
+    %%   \item We'll skip that though, cos models are much more interesting
+    %%   \end{itemize}
+    %% \end{column}
+    \begin{column}{1.0\textwidth}
+<<caretcode, tidy=TRUE,  results="hide", cache=TRUE>>=
+hom.lm.train <- suppressWarnings(train(optimism~., method="lm", 
+                                       data=hom.train, 
+                                       trControl=ctrl, 
+                                       metric=Metric, 
+                                       preProcess=pp, fitBest=FALSE, returnData=TRUE))
 train.totals <- dplyr::select(hom.train, 60:69)
-hom.lm.train.totals <- train(optimism~., method="lm", data=train.totals, preProcess="scale", tuneLength=tl, trControl=ctrl, metric=Metric, fitBest=FALSE, returnData=TRUE)
+hom.lm.train.totals <- suppressWarnings(train(optimism~., method="lm", 
+                                              data=train.totals, 
+                                              tuneLength=tl, 
+                                              trControl=ctrl, 
+                                              metric=Metric, 
+                                              fitBest=FALSE, 
+                                              returnData=TRUE, 
+                                              preProcess=pp))
 
 @       
 
     \end{column}
   \end{columns}
 \end{frame}
-\begin{frame}
+\begin{frame}[fragile]
   \frametitle{Model Predictions}
   \begin{columns}
     \begin{column}{0.4\textwidth}
 <<outputlm, echo=FALSE, results="asis">>=
-print(xtable(summary(hom.lm.train.totals)), scalebox=0.5)
+print(xtable(summary(hom.lm.train.totals),caption="Significance of model predictions"), scalebox=0.5)
 @       
     \end{column}
     \begin{column}{0.6\textwidth}
 <<varImpPlot, echo=FALSE>>=
-plot(varImp(hom.lm.train.totals))
+plot(varImp(hom.lm.train.totals), main="lm variable importance")
 @       
     \end{column}
   \end{columns}
 \end{frame}
-\begin{frame}
+\begin{frame}[fragile]
   \frametitle{This Model Sucks}
   \begin{columns}
-    \begin{column}{0.5\textwidth}
-      \begin{itemize}
-      \item The answer to this problem is clearly to fit more models
+    %% \begin{column}{0.5\textwidth}
+    %%   \begin{itemize}
+    %%   \item The answer to this problem is clearly to fit more models
         
-      \item Lets try regularised regression and random forest
-      \end{itemize}
-    \end{column}
-    \begin{column}{0.5\textwidth}
-<<moremodels, format="markup",  results="hide">>=
-hom.rf.train.totals <- suppresWarnings(suppressMessages(train(optimism~., method="rf", data=train.totals, preProcess="scale", tuneLength=tl, trControl=ctrl, metric=Metric, fitBest=FALSE, returnData=TRUE)))
-hom.glmnet.train.totals <- suppressWarnings(suppressMessages(train(optimism~., method="glmnet", data=train.totals, preProcess="scale", tuneLength=tl, trControl=ctrl, metric=Metric, fitBest=FALSE, returnData=TRUE)))
+    %%   \item Lets try regularised regression and random forest
+    %%   \end{itemize}
+    %% \end{column}
+    \begin{column}{1.0\textwidth}
+<<moremodels, format="markup",  results="hide", cache=TRUE, warning=FALSE, tidy=TRUE>>=
+##fit more models!
+##try a random forest
+hom.rf.train.totals <- suppressMessages(train(optimism~., method="rf", data=train.totals, tuneLength=tl, trControl=ctrl, metric=Metric, fitBest=FALSE, returnData=TRUE, preProcess=pp))
+##glmnet model didn't fit (this was weird)
 @       
     \end{column}
   \end{columns}
 \end{frame}
-\begin{frame}
+\begin{frame}[fragile]
   \frametitle{Do these Models Suck?}
   \begin{columns}
     \begin{column}{0.5\textwidth}
@@ -347,17 +362,27 @@ varImpPlot(hom.rf.train.totals$finalModel, main="Random Forest Variable Importan
     \end{column}
   \end{columns}
 \end{frame}
-\begin{frame}
+\begin{frame}[fragile]
   \frametitle{Yet More Models}
-  \begin{columns}
-    \begin{column}{0.5\textwidth}
-<<glmboost, echo=FALSE>>=
-hom.gam.train.totals <- suppressWarnings(suppressMessages(train(optimism~., method="gam", data=train.totals, preProcess="scale", tuneLength=tl, trControl=ctrl, metric=Metric, fitBest=FALSE, returnData=TRUE)))
-hom.pls.train.totals <- suppressMessages(train(optimism~., method="pls", data=train.totals, preProcess=c("scale", "center"),  tuneLength=tl, trControl=ctrl, metric=Metric, fitBest=FALSE, returnData=TRUE))
+<<glmboost, cache=TRUE, tidy=TRUE, out.width="0.8\\textwidth">>=
+hom.gam.train.totals <- suppressWarnings(
+    suppressMessages(
+        train(optimism~., method="gam", data=train.totals, tuneLength=tl, trControl=ctrl, metric=Metric, 
+              fitBest=FALSE, 
+              returnData=TRUE, 
+              preProcess=pp)))
+hom.pls.train.totals <- 
+    suppressMessages(
+        train(optimism~., method="pls", data=train.totals,  tuneLength=tl, trControl=ctrl, metric=Metric, 
+              fitBest=FALSE, 
+              returnData=TRUE, 
+              preProcess=pp))
 @       
-    \end{column}
-    \begin{column}{0.5\textwidth}
-      \begin{itemize}
+
+\end{frame}
+\begin{frame}[fragile]
+  \frametitle{What Now?}
+        \begin{itemize}
       \item These ones suck too :(
         
       \item So we've tried standard linear models, some non-linear models and some penalised models
@@ -366,10 +391,8 @@ hom.pls.train.totals <- suppressMessages(train(optimism~., method="pls", data=tr
         
       \item What next? 
       \end{itemize}
-    \end{column}
-  \end{columns}
 \end{frame}
-\begin{frame}
+\begin{frame}[fragile]
   \frametitle{Redefining the Problem}
   \begin{itemize}
   \item We're currently using the totals as our training data
@@ -381,29 +404,32 @@ hom.pls.train.totals <- suppressMessages(train(optimism~., method="pls", data=tr
   \item So, in order to improve predictive accuracy, lets start using as much of the data as possible
   \end{itemize}
 \end{frame}
-\begin{frame}
+\begin{frame}[fragile]
   \frametitle{New Features}
   \begin{columns}
     
-    \begin{column}{0.5\textwidth}
-<<samemodelsdifferentdata, eval=2>>=
-hom.glmnet.train <- suppressWarnings(train(optimism~., method="glmnet", data=hom.train, trControl=ctrl, metric=Metric, preProcess=c("scale", "center"), fitBest=FALSE, returnData=TRUE))
-hom.rf.train <- suppressMessages(suppressWarnings(train(optimism~., method="rf", data=hom.train, trControl=ctrl, metric=Metric, fitBest=FALSE, returnData=TRUE)))
+    \begin{column}{1.0\textwidth}
+<<samemodelsdifferentdata, tidy=TRUE, warning=FALSE>>=
+hom.rf.train <- suppressMessages(train(optimism~., method="rf", data=hom.train, trControl=ctrl, metric=Metric, fitBest=FALSE, returnData=TRUE, preProcess=pp))
 @       
     \end{column}
-    \begin{column}{0.5\textwidth}
+    %% \begin{column}{0.5\textwidth}
 <<actuallyprint, echo=FALSE, results="hide">>=
 rf.pr <- as.data.frame(print(hom.rf.train))
 rownames(rf.pr) <- 1:nrow(rf.pr)
 rf.pr2 <- dplyr::select(rf.pr, mtry, RMSE, Rsquared)
 @       
-<<printoutput, echo=FALSE, results="asis">>=
-print(xtable(rf.pr2), scalebox=0.5, include.rownames=FALSE)
-@       
-    \end{column}
+
+    %% \end{column}
   \end{columns}
 \end{frame}
-\begin{frame}
+\begin{frame}[fragile]
+  \frametitle{Success!!!!}
+  <<printoutput, echo=FALSE, results="asis">>=
+print(xtable(rf.pr2), scalebox=0.5, include.rownames=FALSE)
+@       
+\end{frame}
+\begin{frame}[fragile]
   \frametitle{What Actually Happened}
   \begin{itemize}
   \item So, remember we took all of the questions as features
@@ -416,43 +442,45 @@ print(xtable(rf.pr2), scalebox=0.5, include.rownames=FALSE)
     
   \end{itemize}
 \end{frame}
-\begin{frame}
+\begin{frame}[fragile]
   \frametitle{More Modelling!}
   \begin{columns}
-    \begin{column}{0.5\textwidth}
+    \begin{column}{1.0\textwidth}
 <<lotrhide, echo=FALSE, results="hide">>=
 hom.train.opt <- dplyr::select(hom.train, grep("^LOTRQ", x=names(hom.train),invert=TRUE))
 hom.test.opt <- dplyr::select(hom.test, grep("^LOTRQ", x=names(hom.test),invert=TRUE))
 hom.val.opt <- dplyr::select(hom.validation, grep("^LOTRQ", x=names(hom.validation),invert=TRUE))
 @       
-<<removelotr, echo=TRUE, tidy=TRUE>>=
-hom.glmnet.train.opt <- suppressWarnings(train(optimism~., method="glmnet", data=hom.train.opt, trControl=ctrl, metric=Metric, fitBest=FALSE, returnData=TRUE))
-hom.rf.train.opt <- suppressWarnings(train(optimism~., method="rf", data=hom.train.opt, trControl=ctrl, metric=Metric, fitBest=FALSE, returnData=TRUE))
-hom.gam.train.opt <- train(optimism~., method="gam", data=hom.train.opt,  tuneLength=, trControl=ctrl, metric=Metric, fitBest=FALSE, returnData=TRUE)
-hom.pls.train.opt <- train(optimism~., method="pls", data=hom.train.opt, preProcess="scale", tuneLength=tl, trControl=ctrl, metric=Metric, fitBest=FALSE, returnData=TRUE)
+<<removelotr, echo=TRUE, tidy=TRUE, cache=TRUE, out.width="0.8\\textwidth">>=
+hom.rf.train.opt <- suppressWarnings(train(optimism~., method="rf", data=hom.train.opt, trControl=ctrl, metric=Metric, fitBest=FALSE, returnData=TRUE, preProcess=pp))
+hom.gam.train.opt <- train(optimism~., method="gam", data=hom.train.opt,  tuneLength=, trControl=ctrl, metric=Metric, fitBest=FALSE, returnData=TRUE, preProcess=pp)
+hom.pls.train.opt <- train(optimism~., method="pls", data=hom.train.opt, tuneLength=tl, trControl=ctrl, metric=Metric, fitBest=FALSE, returnData=TRUE, preProcess=pp)
 @             
     \end{column}
-    \begin{column}{0.5\textwidth}
+    %% \begin{column}{0.5\textwidth}
 <<dataprint, echo=FALSE, results="hide">>=
 rf.opt.pr <- as.data.frame(print(hom.rf.train.opt))
 rf.opt.pr2 <- dplyr::select(rf.pr, mtry, RMSE, Rsquared)
 @       
+
+    %% \end{column}
+  \end{columns}
+\end{frame}
+\begin{frame}[fragile]
+  \frametitle{Results!}
 <<dataoutput, echo=FALSE, results="asis">>=
 print(xtable(rf.opt.pr2), scalebox=0.5, include.rownames=FALSE)
 @ 
-    \end{column}
-  \end{columns}
 \end{frame}
-\begin{frame}
+\begin{frame}[fragile]
   \frametitle{Make some Predictions}
   \begin{columns}
-    \begin{column}{0.5\textwidth}
-<<predictions, echo=TRUE>>=
-glmnet.pred.obs <- data.frame(pred=predict(hom.glmnet.train.opt, newdata=hom.test.opt), obs=hom.test.opt[["optimism"]], Model="glmnet")
+    \begin{column}{1.0\textwidth}
+<<predictions, echo=TRUE, tidy=TRUE, out.width="0.8\\textwidth">>=
 rf.pred.obs <- data.frame(pred=predict(hom.rf.train.opt, newdata=hom.test.opt), obs=hom.test.opt$optimism, Model="rf")
 gam.pred.obs <- data.frame(pred=predict(hom.gam.train.opt, newdata=hom.test.opt), obs=hom.test.opt[["optimism"]], Model="gam")
 pls.pred.obs <- data.frame(pred=predict(hom.pls.train.opt, newdata=hom.test.opt), obs=hom.test.opt[["optimism"]], Model="pls")
-pred.obs.all <- rbind(glmnet.pred.obs, rf.pred.obs, gam.pred.obs, pls.pred.obs)
+pred.obs.all <- rbind(rf.pred.obs, gam.pred.obs, pls.pred.obs)
 @       
 <<pstresample, echo=FALSE>>=
 resampFunc <- function(data)  {
@@ -466,26 +494,68 @@ rf.acc <- resampFunc(rf.pred.obs)
 acc.all <- as.data.frame(rbind(glmnet.acc, pls.acc, gam.acc, rf.acc))
 
 @ 
-\begin{itemize}
-\item So these models are better, but they still mostly suck
-\end{itemize}
+
     \end{column}
-    \begin{column}{0.5\textwidth}
-<<accrmse, echo=FALSE, results="asis">>=
-xtable(acc.all)
-@ 
-    \end{column}
+    %% \begin{column}{0.5\textwidth}
+
+    %% \end{column}
   \end{columns}
 \end{frame}
-\begin{frame}
-  \frametitle{Predictions Vs Observed}
-<<predvsobs>>=
-ggplot(pred.obs.all, aes(x=pred, y=obs))+geom_point()+geom_smooth(method="lm")+facet_grid(.~Model)
+\begin{frame}[fragile]
+  \frametitle{Predictive Accuracy}
+<<accrmse, echo=FALSE, results="asis">>=
+xtable(acc.all)
 @   
-\end{frame}
-\begin{frame}
-  \frametitle{These models still suck}
+\begin{itemize}
+\item So these models are better, but they still mostly suck
   
+\item Note the sharp decline in R-squared on new data
+\end{itemize}
+\end{frame}
+\begin{frame}[fragile]
+  \frametitle{Predictions Vs Observed}
+<<predvsobs, echo=FALSE>>=
+ggplot(pred.obs.all, aes(x=pred, y=obs))+geom_point()+geom_smooth(method="lm")+facet_grid(.~Model)
+@ 
+
+\end{frame}
+\begin{frame}[fragile]
+  \frametitle{Next Steps}
+  \begin{itemize}
+  \item We could use more data (there's another sample we ignored here)
+    
+  \item Try more complicated models 
+    
+  \item Use deep learning to generate better features
+    
+  \item Collect more (better) data
+  \end{itemize}
+\end{frame}
+\begin{frame}[fragile]
+  \frametitle{Conclusions}
+  \begin{itemize}
+  \item This was a very brief overview
+    
+  \item Mostly based of the \textit{caret} R package by Max Kuhn
+    
+  \item Full code is available on Github
+    
+  \item ``The combination of data and an aching desire to answer some question does not mean that the answer can be extracted from the data'' - Tukey
+  \end{itemize}
+\end{frame}
+\begin{frame}[fragile]
+  \frametitle{Further Reading}
+  \begin{itemize}
+  \item \textit{Hastie et al} Elements of Statistical Learning
+    
+  \item \textit{James et al} Introduction to Statistical Learning
+    
+  \item \textit{Kuhn et al} Applied Predictive Modelling
+    
+  \item http://topepo.github.io/caret/index.html (website for caret)
+    
+  \item http://stats.stackexchange.com
+  \end{itemize}
 \end{frame}
 \end{document}
 %- http://www.avanade.com/~/media/documents/bi-white-paper-healthcare-analytics-practical-predictive-analytics-101-may-2013.pdf
